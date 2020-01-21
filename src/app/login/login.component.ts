@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder,Validators, AbstractControl } from '@angular/forms';
 import { DataserviceService } from '../dataservice.service';
+import { Router, Routes } from '@angular/router';
 DataserviceService
 
-
+Router
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ loginform:FormGroup;
 email:AbstractControl; //any variable name
 pwd:AbstractControl;
 
-  constructor(private formbuilder:FormBuilder,private dataservice:DataserviceService) {
+  constructor(private formbuilder:FormBuilder,private dataservice:DataserviceService,private router:Router) {
 
     this.loginform=formbuilder.group({
       email: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]],
@@ -45,9 +46,22 @@ pwd:AbstractControl;
     
    // console.log(senddata);
     let data=this.dataservice.login(senddata);
+    if(data==true)
+    {
+      this.dataservice.alertForSuccess("Login Been Successfull","Login Status..!!!");
+      this.router.navigate(['about']);
+    }
+    else
+    {
+      this.dataservice.alertforwarning("Login Not Allowed","Login Warning!!");
+    }
+
+
+
   }
   else
   {
+    this.dataservice.alertfordanger("Danger Login","Danger..!!!");
     console.log("empty file");
   }
 
