@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   }
   calling() {
     this.dataservice.currentmessage.subscribe(data => {
-      console.log("Received Data....", data);
+      console.log("Received Data....", data);   
     })
   }
 
