@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl,FormBuilder, Validators, AbstractControl} from '@angular/forms';
+import { DataserviceService } from '../dataservice.service';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-register',
@@ -13,7 +17,7 @@ export class RegisterComponent implements OnInit {
   pass: AbstractControl;
   
 
-  constructor(private formbuilder: FormBuilder) { 
+  constructor(private formbuilder: FormBuilder,private dataservice:DataserviceService, private router: Router) { 
 
     this.registerform=this.formbuilder.group({
 
@@ -37,13 +41,23 @@ export class RegisterComponent implements OnInit {
 
   registered()
   {
-     console.log(" ",this.registerform.value.fname);
-     console.log(" ",this.registerform.value.mail);
-     console.log(" ",this.registerform.value.pass);
-     if(this.registerform.value.gender==0)
-     console.log(" Male");
-     else
-     console.log(" Female");
+    let send=[{
+      name:this.registerform.value.fname,
+      mail:this.registerform.value.mail,
+      pass:this.registerform.value.pass
+    }]
+    this.dataservice.changeMessage(JSON.stringify(send));
+    
+
+    //  console.log(" ",this.registerform.value.fname);
+    //  console.log(" ",this.registerform.value.mail);
+    //  console.log(" ",this.registerform.value.pass);
+    //  if(this.registerform.value.gender==0)
+    //  console.log(" Male");
+    //  else
+    //  console.log(" Female");
+
+    this.router.navigate(['home']);
 
   }
 

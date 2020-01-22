@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 import {ToastrService} from 'ngx-toastr';
+import { BehaviorSubject, Subject } from 'rxjs';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +11,17 @@ import {ToastrService} from 'ngx-toastr';
 export class DataserviceService {
  // mail: any;
  // pswrd: any;
- 
+ private source = new BehaviorSubject("");
+ currentmessage= this.source.asObservable();
 
   constructor(private toasterservice: ToastrService) { }
 
-  
+  changeMessage(message:string)
+  {
+    this.source.next(message);
+  }
+
+
   login(data)
   {
    let mail = data.email;
